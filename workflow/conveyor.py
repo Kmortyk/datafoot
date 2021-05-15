@@ -11,7 +11,7 @@ from workflow import Pipeline
 class Conveyor:
     level = 1
 
-    def __init__(self, reader, batch_size=10, *stages):
+    def __init__(self, reader, stages, batch_size=10):
         self.stages = stages
         self.batch_size = batch_size
         self.reader = reader
@@ -25,9 +25,14 @@ class Conveyor:
             batch = []
 
             for _ in range(0, self.batch_size):
-                item, stop = self.reader.read()
-                if stop:
+                item, ok = self.reader.read()
+                if not ok:
                     return res
                 batch.append(item)
 
-            res.append(*Pipeline(self.stages)(batch)())
+            r = Pipeline(
+                *self.stages
+            )(batch)
+
+            if r is not None:
+                res.append(*r)

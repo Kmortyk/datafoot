@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from file.reader.tf.tf_record import TFRecord
+from reader.tf.tf_record import TFRecord
 
 
 class TFRecordReader:
@@ -16,5 +16,7 @@ class TFRecordReader:
 
         record = TFRecord()
         record.parse_raw_record(raw_record)
+
+        # print(record)
 
         return record, True

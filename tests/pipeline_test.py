@@ -5,9 +5,9 @@ from workflow import Pipeline
 import generate
 
 
-class TestStages(unittest.TestCase):
+class TestPipeline(unittest.TestCase):
 
-    def test_list(self):
+    def test_gen_lists(self):
         Pipeline(
             generate.GenLists(3, size=10, fill=42),
             stage.List(print_each=True),

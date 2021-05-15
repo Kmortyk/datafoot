@@ -2,7 +2,7 @@ import PIL.Image as Image
 import io
 import cv2
 import numpy as np
-from file.reader.tf.tf_features import *
+from reader.tf.tf_features import *
 
 
 class TFRecord:
