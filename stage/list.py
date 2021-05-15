@@ -6,11 +6,11 @@ from typing import List as PythonList
 
 
 class List:
-    def __init__(self, log_each=False):
-        self.log_each = log_each
+    def __init__(self, print_each=False):
+        self.print_each = print_each
 
     def execute(self, args=None) -> PythonList[str]:
-        if self.log_each:
+        if self.print_each:
             if len(args) == 0:
                 print("nothing to list")
                 return []

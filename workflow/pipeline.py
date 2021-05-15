@@ -6,7 +6,7 @@ from typing import List
 # Each stage processes full list of data
 # May be very slow on a big sets of data
 from interfaces.transform import Transform
-from multipath.multipath import MultiPath
+from dataset import Dataset
 
 
 class Pipeline:
@@ -44,18 +44,16 @@ class Pipeline:
             self.log(idx, stage)
 
             if issubclass(type(stage), Transform):
-                mp = MultiPath()
+                ds = Dataset()
                 for arg in args:
-                    mp.merge(stage.transform(arg))
+                    ds.append_rows(stage.transform(arg))
 
-                print(mp)
-
-                for data_num in range(mp.count):
+                for data_num in range(ds.columns_count):
                     idx += 1
                     if idx >= len(self.stages):
                         return []
 
-                    data_arg = mp[data_num]
+                    data_arg = ds[data_num]
 
                     next_stage = self.stages[idx]
                     next_stage.level = self.level + 1

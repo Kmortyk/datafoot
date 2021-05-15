@@ -48,8 +48,8 @@ class OverlayChooseRandom(Transform):
         cv2.imwrite(arg, img)
 
         m = MultiPath()
-        m.append([arg])
-        m.append([trg_path])
-        m.append([(offset_x, offset_y, offset_x + trg.shape[1], offset_y + trg.shape[0])])
+        m.append_column([arg])
+        m.append_column([trg_path])
+        m.append_column([(offset_x, offset_y, offset_x + trg.shape[1], offset_y + trg.shape[0])])
 
         return m
