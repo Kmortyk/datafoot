@@ -1,10 +1,11 @@
 import random
 import cv2
-from src.datafoot.multipath import MultiPath
-from src.datafoot.multipath.transform.transform import Transform
+
+from dataset import Dataset
+from interfaces.converter import Converter
 
 
-class OverlayChooseRandom(Transform):
+class OverlayChooseRandom(Converter):
     def __init__(self, targets_paths):
         self.targets_paths = targets_paths
 
@@ -34,7 +35,7 @@ class OverlayChooseRandom(Transform):
     # 0 - image with overlay path
     # 1 - target overlay path
     # 2 - target overlay pos in form (x1, y1, x2, y2)
-    def transform(self, arg) -> MultiPath:
+    def convert(self, arg) -> Dataset:
         trg_path, trg = self.rand_target()
 
         img = cv2.imread(arg, cv2.IMREAD_UNCHANGED)
@@ -47,9 +48,9 @@ class OverlayChooseRandom(Transform):
         img = self.overlay(img, trg, (offset_x, offset_y))
         cv2.imwrite(arg, img)
 
-        m = MultiPath()
-        m.append_column([arg])
-        m.append_column([trg_path])
-        m.append_column([(offset_x, offset_y, offset_x + trg.shape[1], offset_y + trg.shape[0])])
+        ds = Dataset()
+        ds.append_column('path', [arg])
+        ds.append_column('overlay_path', [trg_path])
+        ds.append_column('overlay_bound', [(offset_x, offset_y, offset_x + trg.shape[1], offset_y + trg.shape[0])])
 
-        return m
+        return ds

@@ -22,7 +22,7 @@ Pipeline(
 from workflow import Pipeline
 from file import Formats
 import stage
-import trans
+import convert
 
 base_path = "/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/processing/vids/splitted_copy"
 
@@ -30,7 +30,7 @@ Pipeline(
     stage.ListFiles(base_path, Formats.Image),
     stage.Take(1000 - 288),
     stage.CopyTo(base_path + '/synthetic'),
-    trans.img.OverlayChooseRandom([
+    convert.img.OverlayChooseRandom([
         '/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/empty_to_synthetic/bottle_blue_1.png',
         '/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/empty_to_synthetic/bottle_green_2.png'
     ]),

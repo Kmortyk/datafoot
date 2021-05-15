@@ -10,9 +10,7 @@ class GenLists:
     def execute(self, _=None) -> Dataset:
         ds = Dataset()
 
-        for _ in range(self.count):
-            ds.append_column([self.fill] * self.size)
-
-        # print(ds)
+        for idx in range(self.count):
+            ds.append_column(str(idx), [self.fill] * self.size)
 
         return ds

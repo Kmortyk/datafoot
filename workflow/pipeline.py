@@ -5,8 +5,8 @@ from typing import List
 # Pipeline: Stage1 -> Stage2 -> Output
 # Each stage processes full list of data
 # May be very slow on a big sets of data
-from interfaces.transform import Transform
 from dataset import Dataset
+from interfaces.converter import Converter
 
 
 class Pipeline:
@@ -43,12 +43,12 @@ class Pipeline:
             stage = self.stages[idx]
             self.log(idx, stage)
 
-            if issubclass(type(stage), Transform):
+            if issubclass(type(stage), Converter):
                 ds = Dataset()
                 for arg in args:
-                    ds.append_rows(stage.transform(arg))
+                    ds.append_rows(stage.convert(arg))
 
-                for data_num in range(ds.columns_count):
+                for data_num in range(len(ds.column_names)):
                     idx += 1
                     if idx >= len(self.stages):
                         return []
