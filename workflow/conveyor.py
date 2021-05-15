@@ -18,7 +18,7 @@ class Conveyor:
 
     def __call__(self, *args, **kwargs): self.execute(args)
 
-    def execute(self, args=None) -> List[str]:
+    def execute(self, args=None):
         res = []
 
         while True:
@@ -27,12 +27,15 @@ class Conveyor:
             for _ in range(0, self.batch_size):
                 item, ok = self.reader.read()
                 if not ok:
-                    return res
+                    break
                 batch.append(item)
 
-            r = Pipeline(
-                *self.stages
-            )(batch)
+            if len(batch) > 0:
+                r = Pipeline(
+                    *self.stages
+                )(*batch)
 
-            if r is not None:
-                res.append(*r)
+                if r is not None:
+                    res.append(*r)
+            else:
+                return res

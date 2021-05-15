@@ -17,6 +17,4 @@ class TFRecordReader:
         record = TFRecord()
         record.parse_raw_record(raw_record)
 
-        # print(record)
-
         return record, True
