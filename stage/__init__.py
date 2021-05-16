@@ -5,5 +5,6 @@ from .copy_to import CopyTo
 from .write_to_file import WriteToFile
 from .list import List
 from .create_dir import CreateDir
+from .list_with_same_content import ListWithSameContent
 
 import stage.img as img

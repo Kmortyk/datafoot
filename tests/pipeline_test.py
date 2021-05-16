@@ -15,6 +15,12 @@ class TestPipeline(unittest.TestCase):
             stage.List()
         )()
 
+    def test_list_with_same_content(self):
+        Pipeline(
+           stage.ListFiles("/home/kmortyk/Projects/ethp2p/sentry/testdata"),
+           stage.ListWithSameContent()
+        )()
+
 
 if __name__ == '__main__':
     unittest.main()
