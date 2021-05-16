@@ -8,4 +8,6 @@ class PickColumn:
         self.column_name = column_name
 
     def execute(self, ds: Dataset) -> List:
+        print(f"pick column '{self.column_name}'")
+
         return ds[self.column_name]

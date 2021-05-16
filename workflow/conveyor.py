@@ -30,6 +30,8 @@ class Conveyor:
                     break
                 batch.append(item)
 
+            print(f"\n# Process batch with size '{len(batch)}'\n")
+
             if len(batch) > 0:
                 r = Pipeline(
                     *self.stages

@@ -16,7 +16,7 @@ class TestPipeline(unittest.TestCase):
             reader=reader.tf.TFRecordReader(tf_record_path),
             stages=[
                 convert.tf.TFRecordsToDataset(),
-                dataset.PickColumn("image"),
+                dataset.PickColumn("image_bytes"),
                 writer.WriteImage(base_path=output_images),
             ]
         )()

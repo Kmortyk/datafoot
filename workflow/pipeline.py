@@ -7,6 +7,7 @@ from typing import List
 # May be very slow on a big sets of data
 from dataset import Dataset
 from interfaces.converter import Converter
+from interfaces.writer import Writer
 
 
 class Pipeline:
@@ -48,16 +49,25 @@ class Pipeline:
                 for arg in args:
                     ds.append_rows(stage.convert(arg))
 
-                for data_num in range(len(ds.column_names)):
-                    idx += 1
-                    if idx >= len(self.stages):
-                        return []
+                args = ds
 
-                    data_arg = ds[data_num]
+                # for column_name in ds.column_names:
+                #     idx += 1
+                #     if idx >= len(self.stages):
+                #         return []
+                #
+                #     data_arg = ds[column_name]
+                #
+                #     next_stage = self.stages[idx]
+                #     next_stage.level = self.level + 1
+                #     next_stage.execute(data_arg)
+            elif issubclass(type(stage), Writer):
+                res = []
 
-                    next_stage = self.stages[idx]
-                    next_stage.level = self.level + 1
-                    next_stage.execute(data_arg)
+                for arg in args:
+                    res.append(*stage.write(arg))
+
+                args = res
             else:
                 args = stage.execute(args)
 

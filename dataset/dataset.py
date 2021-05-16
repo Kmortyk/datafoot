@@ -1,3 +1,6 @@
+import collections
+
+
 class Dataset:
     def __init__(self):
         self.columns = []
@@ -38,12 +41,17 @@ class Dataset:
         if len(self.column_names) == 0:
             return "Dataset[r0:c0]"
 
+        max_size = 10
         tail = "\n| "
         s = f"Dataset[r{len(self.columns[0])}:c{len(self.column_names)}]{tail}"
 
         for row_idx in range(len(self.columns[0])):
             for col in self.columns:
-                s += str(col[row_idx]) + " | "
+                v = col[row_idx]
+                if isinstance(v, collections.Sized) and len(v) > max_size:
+                    s += str(col[row_idx][:max_size]) + "... | "
+                else:
+                    s += str(col[row_idx]) + " | "
             if row_idx != len(self.columns[0]) - 1:
                 s += tail
 
