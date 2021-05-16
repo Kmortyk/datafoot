@@ -65,7 +65,10 @@ class TFRecord:
             len(self.x_min_arr),
             len(self.y_min_arr),
             len(self.x_max_arr),
-            len(self.y_max_arr)
+            len(self.y_max_arr),
+            len(self.labels),
+            len(self.labels_id),
+            len(self.difficult)
         ]
 
         for i in range(0, len(counts)-1):

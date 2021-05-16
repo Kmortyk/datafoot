@@ -5,7 +5,7 @@ from PIL import Image
 from interfaces.writer import Writer
 
 
-class WriteImage(Writer):
+class WriteImageBytes(Writer):
     counter = 0
 
     def __init__(self, base_path, base_name='image', ext='jpg'):

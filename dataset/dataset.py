@@ -2,6 +2,8 @@ import collections
 
 
 class Dataset:
+    iter = 0
+
     def __init__(self):
         self.columns = []
         self.column_names = []
@@ -35,7 +37,21 @@ class Dataset:
         return len(self.columns)
 
     def __iter__(self):
-        return self.columns.__iter__()
+        self.iter = 0
+        return self
+
+    def __next__(self):
+        if self.iter == len(self.columns[0]):
+            raise StopIteration
+
+        ds = Dataset()
+
+        for idx, col in enumerate(self.column_names):
+            ds.append_column(col, self.columns[idx][self.iter])
+
+        self.iter += 1
+
+        return ds
 
     def __str__(self):
         if len(self.column_names) == 0:
