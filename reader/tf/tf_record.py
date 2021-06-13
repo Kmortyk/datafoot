@@ -68,12 +68,12 @@ class TFRecord:
             len(self.y_max_arr),
             len(self.labels),
             len(self.labels_id),
-            len(self.difficult)
+            # len(self.difficult)
         ]
 
         for i in range(0, len(counts)-1):
             if counts[i] != counts[i+1]:
-                print(f"[ERROR] not all counts are equal: {counts[i]} vs {counts[i+1]}")
+                print(f"[WARNING] not all counts are equal in tf record: {counts[i]} vs {counts[i+1]}")
 
         return counts[0]
 

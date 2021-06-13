@@ -43,6 +43,7 @@ class WriteTxtDatasetSample(Writer):
         print(f"write to txt, path: '{self.output_path}' image:'{image_path}'")
 
         self.f.write(line)
+        # self.f.close()
 
         # TODO return dataset
         return [image_path]
