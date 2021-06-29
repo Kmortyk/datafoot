@@ -5,10 +5,10 @@ from typing import List
 # Pipeline: Stage1 -> Stage2 -> Output
 # Each stage processes full list of data
 # May be very slow on a big sets of data
+
 from dataset import Dataset
 from interfaces.converter import Converter
 from interfaces.writer import Writer
-
 
 class Pipeline:
     def __init__(self, *stages):

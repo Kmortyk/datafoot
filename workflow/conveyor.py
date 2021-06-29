@@ -2,11 +2,10 @@ from typing import List
 
 # Conveyor: process data in sequential order with given stages
 # Example:
-# Pipeline: Stage1 -> Stage2 -> Output
-# Each stage processes full list of data
-# May be very slow on a big sets of data
-from workflow import Pipeline
+# Conveyor: Stage1 -> Stage2 -> Output
+# Each stage processes small amount of data with size 'batch_size'
 
+from workflow import Pipeline
 
 class Conveyor:
     level = 1
