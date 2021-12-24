@@ -54,24 +54,36 @@ class Dataset:
 
         self.iter += 1
 
+        print(ds)
+
         return ds
 
     def __str__(self):
         if len(self.column_names) == 0:
             return "Dataset[r0:c0]"
 
-        max_size = 10
+        max_size = 30
         tail = "\n| "
-        s = f"Dataset[r{len(self.columns[0])}:c{len(self.column_names)}]{tail}"
 
-        for row_idx in range(len(self.columns[0])):
+        l = 1
+        if isinstance(self.columns[0], collections.Sized):
+            l = len(self.columns[0])
+
+        s = f"Dataset[r{l}:c{len(self.column_names)}]{tail}"
+
+        for row_idx in range(l):
             for col in self.columns:
-                v = col[row_idx]
-                if isinstance(v, collections.Sized) and len(v) > max_size:
-                    s += str(col[row_idx][:max_size]) + "... | "
+                if l == 1:
+                    v = str(col)
                 else:
-                    s += str(col[row_idx]) + " | "
-            if row_idx != len(self.columns[0]) - 1:
+                    v = str(col[row_idx])
+
+                if isinstance(v, collections.Sized) and len(v) > max_size:
+                    s += v[:max_size] + "... | "
+                else:
+                    s += v + " | "
+
+            if row_idx != l - 1:
                 s += tail
 
         return s

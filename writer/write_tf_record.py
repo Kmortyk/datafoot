@@ -10,17 +10,11 @@ import stage
 class WriteTFRecord(Writer):
     counter = 0
 
-    # create dir in advance to have opportunity to open file
-    def __init__(self, base_path, base_name='image', ext='jpg'):
-        stage.CreateDir(base_path).execute()
-
-        self.ext = ext
-        self.base_path = base_path
-        self.base_name = base_name
+    def __init__(self, output_path):
+        stage.CreateDir(os.path.dirname(output_path)).execute() # create directory for the record
+        self.output_path = output_path
 
     def write(self, ds) -> List[str]:
-        res = []
-
         print(ds)
 
         #
@@ -31,4 +25,4 @@ class WriteTFRecord(Writer):
         # img.save(path)
         #
 
-        return res
+        return [self.output_path]

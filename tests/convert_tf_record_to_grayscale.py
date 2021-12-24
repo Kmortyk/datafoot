@@ -17,8 +17,8 @@ class TestPipeline(unittest.TestCase):
             stages=[
                 convert.tf.TFRecordsToDataset(),
                 convert.img.Grayscale(),
-                dataset.PrintDataset(),
-                # writer.WriteTFRecord(base_path=tf_output_path),
+                # dataset.PrintDataset(),
+                writer.WriteTFRecord(output_path=tf_output_path),
             ],
         )()
 
