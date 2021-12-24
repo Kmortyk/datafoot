@@ -17,7 +17,7 @@ class Conveyor:
 
     def __call__(self, *args, **kwargs): self.execute(args)
 
-    def execute(self, args=None):
+    def execute(self, _=None):
         res = []
 
         while True:

@@ -8,12 +8,14 @@ class Grayscale(Converter):
         pass
 
     def convert(self, ds) -> Dataset:
-        images_bts = ds['image_bytes']
+        print(ds)
+
+        images_bts = ds['image_bytes'][0]
         img = Image.open(io.BytesIO(images_bts)).convert('L')
 
         img_byte_arr = io.BytesIO()
         img.save(img_byte_arr, format='PNG')
 
-        ds['image_bytes'] = [img_byte_arr.getvalue()]
+        ds['image_bytes'] = [[img_byte_arr.getvalue()]]
 
         return ds
