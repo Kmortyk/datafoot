@@ -11,4 +11,5 @@ class CreateDir:
 
         if not os.path.exists(self.dir_path):
             os.makedirs(self.dir_path)
+
         return [self.dir_path]

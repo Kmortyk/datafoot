@@ -16,6 +16,4 @@ class Grayscale(Converter):
 
         ds['image_bytes'] = [img_byte_arr.getvalue()]
 
-        print(ds)
-
         return ds

@@ -54,8 +54,6 @@ class Dataset:
 
         self.iter += 1
 
-        print(ds)
-
         return ds
 
     def __str__(self):
