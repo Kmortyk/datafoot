@@ -19,6 +19,7 @@ class Conveyor:
 
     def execute(self, _=None):
         res = []
+        total = 0
 
         while True:
             batch = []
@@ -29,7 +30,9 @@ class Conveyor:
                     break
                 batch.append(item)
 
-            print(f"\n# Process batch with size '{len(batch)}'\n")
+            total += len(batch)
+
+            print(f"\n# Process batch with size {len(batch)}, total: {total} \n")
 
             if len(batch) > 0:
                 r = Pipeline(

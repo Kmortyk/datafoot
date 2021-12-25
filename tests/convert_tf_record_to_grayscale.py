@@ -9,8 +9,8 @@ from workflow import *
 
 class TestPipeline(unittest.TestCase):
     def test_read_tf_record(self):
-        tf_record_path = '/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/bottle_soup_green/training.record'
-        tf_output_path = '/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/bottle_soup_green/training_grayscale.record'
+        tf_record_path = '/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/bottle_soup_green/testing.record'
+        tf_output_path = '/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/bottle_soup_green/grayscale/testing_grayscale.record'
 
         Conveyor(
             reader=reader.tf.TFRecordReader(tf_record_path),
@@ -20,6 +20,7 @@ class TestPipeline(unittest.TestCase):
                 # dataset.PrintDataset(),
                 writer.WriteTFRecord(output_path=tf_output_path),
             ],
+            batch_size=30
         )()
 
 
