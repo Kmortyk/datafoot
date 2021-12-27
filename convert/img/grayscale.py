@@ -11,8 +11,11 @@ class Grayscale(Converter):
         images_bts = ds['image_bytes'][0]
         img = Image.open(io.BytesIO(images_bts)).convert('L')
 
+        rgbimg = Image.new("RGB", img.size)
+        rgbimg.paste(img)
+
         img_byte_arr = io.BytesIO()
-        img.save(img_byte_arr, format='jpeg')
+        rgbimg.save(img_byte_arr, format='JPEG')
 
         ds['image_bytes'] = [img_byte_arr.getvalue()]
 
