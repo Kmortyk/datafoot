@@ -1,7 +1,6 @@
 import unittest
 
 import convert
-import dataset
 import reader.tf.tf_record_reader
 import writer
 from workflow import *

@@ -7,6 +7,8 @@ class TFRecordsToDataset(Converter):
     def convert(self, record: TFRecord) -> Dataset:
         ds = Dataset()
 
+        # todo unpack here?
+
         ds.append_column("width", [[record.width]])
         ds.append_column("height", [[record.height]])
         ds.append_column("filename", [[record.filename]])

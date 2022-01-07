@@ -1,6 +1,5 @@
 from dataset import Dataset
 
-
 class PickColumns:
     def __init__(self, *column_names):
         self.column_names = column_names
