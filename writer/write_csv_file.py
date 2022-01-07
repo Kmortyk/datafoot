@@ -8,11 +8,12 @@ from dataset import Dataset
 class WriteCSVFile(Writer):
     counter = 0
 
-    def __init__(self, output_path):
+    def __init__(self, output_path, log=False):
         stage.CreateDir(os.path.dirname(output_path)).execute() # create directory for the record
         self.output_path = output_path
         self.header_wrote = False
         self.csv_writer = csv.writer(open(output_path, 'w+', newline=''))
+        self.log = log
 
     def write(self, ds: Dataset) -> List[str]:
         # write header
@@ -23,7 +24,10 @@ class WriteCSVFile(Writer):
         # write values
         for row in ds:
             values = row.row_values(0)
-            print(f"write csv record: {values}")
+
+            if self.log:
+                print(f"write csv record: {values}")
+
             self.csv_writer.writerow(values)
 
         return [self.output_path]

@@ -14,13 +14,6 @@ def get_scores(record_ds):
     for row in record_ds.rows():
         score = 0
 
-        # img size
-        w, h = row["width"][0], row["height"][0]
-
-        img_area = w*h
-        cx = 0 + w / 2
-        cy = 0 + h / 2
-
         for bbox_idx in range(len(row["bbox_count"])):
             x_min = row["bbox_xmin_arr"][bbox_idx][0]
             y_min = row["bbox_ymin_arr"][bbox_idx][0]
@@ -33,19 +26,20 @@ def get_scores(record_ds):
             assert bbox_w > 0
             assert bbox_h > 0
 
+            # bounding box overall size
             bbox_area = bbox_w * bbox_h
-            bbox_cx = x_min + bbox_w / 2
-            bbox_cy = y_min + bbox_h / 2
 
             assert bbox_area > 0
 
-            # bounding box overall size
-            area_frac = img_area / bbox_area
-
             # center point delta
-            center_delta = math.sqrt((cx - bbox_cx)**2 + (cy - bbox_cy)**2)
+            bbox_cx = x_min + bbox_w / 2
+            bbox_cy = y_min + bbox_h / 2
 
-            score += (50*area_frac + 50*center_delta)
+            center_delta = math.sqrt((0.5 - bbox_cx)**2 + (0.5 - bbox_cy)**2)
+
+            score += (50*bbox_area + 50*center_delta)
+
+            print(f"area_frac {bbox_area}, center_delta {center_delta}, score {score}")
 
         scores.append([score])
 
@@ -74,7 +68,7 @@ class TestConveyor(unittest.TestCase):
                 ),
                 writer.WriteCSVFile(output_path=csv_output_path),
             ],
-            batch_size=100
+            batch_size=3000
         )()
 
 
