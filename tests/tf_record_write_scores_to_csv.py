@@ -37,7 +37,7 @@ def get_scores(record_ds):
 
             center_delta = math.sqrt((0.5 - bbox_cx)**2 + (0.5 - bbox_cy)**2)
 
-            score += (50*bbox_area + 50*center_delta)
+            score += (50*bbox_area + 50*(1 - center_delta))
 
             print(f"area_frac {bbox_area}, center_delta {center_delta}, score {score}")
 
@@ -55,8 +55,8 @@ def get_filename(record_ds):
 
 class TestConveyor(unittest.TestCase):
     def test_read_tf_record(self):
-        tf_record_path = '/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/bottle_soup_green/training.record'
-        csv_output_path = '/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/bottle_soup_green/training_scores.csv'
+        tf_record_path = '/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/bottle_soup_green/testing.record'
+        csv_output_path = '/mnt/sda1/Projects/PycharmProjects/MikeHotel_TFOD2/dataset/bottle_soup_green/testing_scores.csv'
 
         Conveyor(
             reader=reader.tf.TFRecordReader(tf_record_path),
