@@ -14,6 +14,7 @@ class Pipeline:
     def __init__(self, *stages):
         self.stages = stages
         self.level = 1
+        self.write_if_none = False
 
     def __call__(self, *args, **kwargs):
         self.execute(args)
@@ -28,6 +29,9 @@ class Pipeline:
             print('\n' + log)
         else:
             print(log)
+
+    def call_unwrap(self, *args):
+        self.execute(args[0])
 
     def execute(self, args=None) -> List[str]:
         if len(self.stages) == 0:
@@ -62,12 +66,21 @@ class Pipeline:
                 #     next_stage.level = self.level + 1
                 #     next_stage.execute(data_arg)
             elif issubclass(type(stage), Writer):
-                res = []
+                results = []
 
-                for arg in args:
-                    res.append(*stage.write(arg))
+                if self.write_if_none or args is not None:
+                    if isinstance(args, Dataset):
+                        result = stage.write(args)
+                        if len(result) > 0:
+                            results.append(*result)
+                    else:
+                        for arg in args:
+                            result = stage.write(arg)
+                            results.append(*result)
+                else:
+                    print("[WARN] can't write None object")
 
-                args = res
+                args = results
             else:
                 args = stage.execute(args)
 

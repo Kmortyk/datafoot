@@ -10,10 +10,11 @@ from workflow import Pipeline
 class Conveyor:
     level = 1
 
-    def __init__(self, reader, stages, batch_size=10):
+    def __init__(self, reader, stages, batch_size=10, write_if_none=False):
         self.stages = stages
         self.batch_size = batch_size
         self.reader = reader
+        self.write_if_none = write_if_none
 
     def __call__(self, *args, **kwargs): self.execute(args)
 
@@ -36,8 +37,11 @@ class Conveyor:
 
             if len(batch) > 0:
                 r = Pipeline(
-                    *self.stages
+                    *self.stages,
                 )(*batch)
+
+                if self.write_if_none:
+                    r.write_if_none = True
 
                 if r is not None:
                     res.append(*r)
